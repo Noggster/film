@@ -5,7 +5,7 @@ Edit server.js,
 change declaration of variable data to the path of your config-file.
 change output path to .json (optional)
 
-Your config.js should be formated as such:
+Your config.js should be formated as such: <br />
 <code>
 exports.reviews = [
 	{
@@ -15,6 +15,7 @@ exports.reviews = [
 	}
 ]
 </code>
+<br />
 The main.js file then uses mustache to parse the data into HTML, you can edit the template however you want.
 
 A cat for good measure :3
