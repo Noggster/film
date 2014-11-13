@@ -3,7 +3,7 @@ var app = require('http').createServer(handler),
     io = require('socket.io').listen(app),
     http = require('http'),
     fs = require('fs'),
-    data = require('../reviews/config');
+    data = require('../reviews/config'); // This should point to your .js file containing reviews
 
 // This is the port for our web server.
 app.listen(1337);
@@ -19,8 +19,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 var settings = {
-    configPath : '../reviews/config.json',
-    jsonPath : '../reviews/reviews.json',
+    jsonPath : '../reviews/reviews.json', // Change me to path of your .json output
     imdbApi : 'omdbapi.com',
     pollTime : 60000 // 60000ms = 10minutes
 };
