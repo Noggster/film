@@ -11,12 +11,12 @@
     </head>
     <body>
         <div class="container">
-            <div class="row" id="target">
+            <div class="row js-reviews-target">
             </div>
         </div>
 
 
-        <script id="reviews" type="x-tmpl-mustache">
+        <script id="reviewsTemplate" type="x-tmpl-mustache">
             {{#movies}}
             <div class="col-sm-4">
                 <article class="movie-item">
@@ -30,8 +30,8 @@
             </div>
             {{/movies}}
         </script>
-        <script type="text/javascript" src="lib/js/mustache.js"></script>
-        <script type="text/javascript" src="lib/js/helper.js"></script>
-        <script type="text/javascript" src="lib/js/main.js"></script>
+        <script type="text/javascript" src="lib/js/mustache.min.js"></script>
+        <script type="text/javascript" src="lib/js/helper.min.js"></script>
+        <script type="text/javascript" src="lib/js/main.min.js"></script>
     </body>
 </html>
