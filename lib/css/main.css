@@ -9,3 +9,6 @@ h2 {
   margin: 0 1em 2em;
   font-size: 0.85em;
 }
+.container {
+  margin-top: 60px;
+}

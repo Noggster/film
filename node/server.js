@@ -21,7 +21,7 @@ io.sockets.on('connection', function (socket) {
 var settings = {
     jsonPath : '../reviews/reviews.json', // Change me to path of your .json output
     imdbApi : 'omdbapi.com',
-    pollTime : 60000 // 60000ms = 10minutes
+    pollTime : 10000 // 60000ms = 10minutes
 };
 
 console.log( 'server up and running! running initial import in: ' + settings.pollTime / 60000 + ' minutes' );
@@ -57,21 +57,55 @@ function mergeData( userTitle, userReview, imdbId, length ) {
             }
             reviewsJson.movies.push( review );
 
-            if(timesDataFetched == length) {
+            /*if(timesDataFetched == length) {
                 writeToFile();
-            }
+            }*/
+        });
+
+    }).end();
+
+    res.on('end', function() {
+
+    });
+}
+
+var Review = function( obj, userReview ) {
+    this.title = obj.Title;
+    this.review = userReview;
+    this.year = obj.Year;
+    this.runtime = obj.Runtime;
+    this.poster = obj.Poster;
+    this.imdbRating = obj.imdbRating;
+}
+
+function getImdbData( review, i ) {
+    var options = {
+        host: settings.imdbApi,
+        port: 80,
+        path: '/?i=' + review.imdbId,
+        method: 'GET'
+    };
+
+    http.request(options, function(res) {
+        res.setEncoding( 'utf8' );
+        res.on('data', function ( data ) {
+            var obj = JSON.parse(data);
+            reviewsJson.movies.push( new Review( data, review ) );
+            updateJSON( i+1 );
         });
     }).end();
 }
 
-setInterval( updateJSON, settings.pollTime );
+//setInterval( updateJSON, settings.pollTime );
 
-function updateJSON() {
-    for( var i = 0; i < data.reviews.length; i++ ) {
-        var currentIndex = data.reviews[i];
-
-        mergeData( currentIndex.title, currentIndex.review, currentIndex.imdbId, data.reviews.length );
+function updateJSON( i ) {
+    i = i || 0;
+    if ( data.reviews[i]) {
+        getImdbData(data.reviews[i], i);
+    } else {
+        writeToFile();
     }
+
 }
 
 function writeToFile() {
@@ -84,4 +118,8 @@ function writeToFile() {
 
         console.log( 'filed saved, running next import in: ' + settings.pollTime / 60000 + ' minutes');
     });
+
+    setTimeout(updateJSON, settings.pollTime);
 }
+
+updateJSON();
