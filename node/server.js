@@ -21,7 +21,7 @@ io.sockets.on('connection', function (socket) {
 var settings = {
     jsonPath : '../reviews/reviews.json', // Change me to path of your .json output
     imdbApi : 'omdbapi.com',
-    pollTime : 10000 // 60000ms = 10minutes
+    pollTime : 600000 // 600000ms = 10minutes
 };
 
 console.log( 'server up and running! running initial import in: ' + settings.pollTime / 60000 + ' minutes' );
@@ -32,46 +32,11 @@ var reviewsJson = {
 
 var timesDataFetched = 0;
 
-function mergeData( userTitle, userReview, imdbId, length ) {
-    var options = {
-        host: settings.imdbApi,
-        port: 80,
-        path: '/?i=' + imdbId,
-        method: 'POST'
-    };
-
-    http.request(options, function(res) {
-        res.setEncoding( 'utf8' );
-        res.on('data', function ( data ) {
-
-            timesDataFetched++;
-
-            var obj = JSON.parse(data);
-            var review = {
-                title: obj.Title,
-                review: userReview,
-                year: obj.Year,
-                runtime: obj.Runtime,
-                poster: obj.Poster,
-                imdbRating: obj.imdbRating
-            }
-            reviewsJson.movies.push( review );
-
-            /*if(timesDataFetched == length) {
-                writeToFile();
-            }*/
-        });
-
-    }).end();
-
-    res.on('end', function() {
-
-    });
-}
-
 var Review = function( obj, userReview ) {
+    var obj = JSON.parse(obj);
+
     this.title = obj.Title;
-    this.review = userReview;
+    this.review = userReview.review;
     this.year = obj.Year;
     this.runtime = obj.Runtime;
     this.poster = obj.Poster;
@@ -90,6 +55,7 @@ function getImdbData( review, i ) {
         res.setEncoding( 'utf8' );
         res.on('data', function ( data ) {
             var obj = JSON.parse(data);
+
             reviewsJson.movies.push( new Review( data, review ) );
             updateJSON( i+1 );
         });
