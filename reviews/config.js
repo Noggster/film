@@ -22,6 +22,11 @@ exports.reviews = [
 	{
 		title : 'The Maze Runner',
 		imdbId : 'tt1790864',
-		review: '"Herrppp, dat movie with girl shooting arrows, lets make dat! but with bois! bois way cooler!" - Maze Runner producers'
-	}
+		review: '"Herrppp, dat movie with girl shooting arrows, lets make dat! but with bois! bois wai cooler!" - Maze Runner producers'
+	},
+	{
+		title : 'Turtles (2014)',
+		imdbId : 'tt1291150',
+		review: 'Childhood ruined!!!1111 Nah, lets be honest here. All turtle related shit we\'ve seen has been fucking aweful. Those 90s cartoons? Yeah they\'re fucking shit, the new turtles cartoons? Yeah, shit dipped in cool. We just can\'t defend it anymore, it was the tits when we was kids, but we were fucking retarded back then. Bottom line, everything turtles is bad, including this piece of cuntstain, fuck you Bay..'
+	}	
 ]

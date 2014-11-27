@@ -24,7 +24,7 @@ var settings = {
     pollTime : 600000 // 600000ms = 10minutes
 };
 
-console.log( 'server up and running! running initial import in: ' + settings.pollTime / 60000 + ' minutes' );
+console.log( 'server up and running! running initial import' );
 
 var reviewsJson = {
     movies : []
@@ -32,6 +32,9 @@ var reviewsJson = {
 
 var timesDataFetched = 0;
 
+/*
+/* Review Class
+*/
 var Review = function( obj, userReview ) {
     var obj = JSON.parse(obj);
 
@@ -43,6 +46,9 @@ var Review = function( obj, userReview ) {
     this.imdbRating = obj.imdbRating;
 }
 
+/*
+/* getImdbData: connects to unoffical imdb api and creates a new Review with Imdb-data.
+*/
 function getImdbData( review, i ) {
     var options = {
         host: settings.imdbApi,
@@ -62,8 +68,9 @@ function getImdbData( review, i ) {
     }).end();
 }
 
-//setInterval( updateJSON, settings.pollTime );
-
+/*
+/* updateJSON: Loops through config.js looking for reviews, takes the data from these and merge them with imdb-data.
+*/
 function updateJSON( i ) {
     i = i || 0;
     if ( data.reviews[i]) {
@@ -71,9 +78,11 @@ function updateJSON( i ) {
     } else {
         writeToFile();
     }
-
 }
 
+/*
+/* writeTofile: Saves the merged data in a new .json-file.
+*/
 function writeToFile() {
     timesDataFetched = 0;
 
